@@ -20,7 +20,7 @@ function getCurrentWeekday() {
     const today = new Date();
     console.log("Today is" , days[today.getDate()])
 }
-getCurrentWeekday
+getCurrentWeekday()
 getDate();
 getCurrentDay();
 getCurrentMonth();
