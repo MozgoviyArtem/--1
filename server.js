@@ -1,4 +1,20 @@
-const moment = require('moment')
+const moment = require('moment');
+const express = require('express');
+const app = express();
+const HOST = 'localhost';
+const PORT = 8018;
+
+function getCurrentTimestamp(){
+    return new Date(). toISOString();
+}
+
+app.get('/timestamp', (req,res) =>{
+    res.json({ timestamp : getCurrentTimestamp()})
+})
+
+app.listen(PORT,HOST, ()=>{
+    console.log("Сервер запущено на http://localhost:8018")
+})
 
 function getCurrentDay(){
     console.log(moment().format('dddd'))
