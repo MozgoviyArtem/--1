@@ -14,6 +14,27 @@ app.get('/posts', (req, res) => {
     if (err) {
       return res;
     }
+    const skip = req.query.skip ? parseInt(req.query.skip) : 0;
+    const take = req.query.take ? parseInt(req.query.take) : null;
+
+    if ((req.query.skip && isNaN(skip)) || (req.query.take && isNaN(take))) {
+      return res.status(400).json({ error: 'skip і take повинні бути числами' });
+    }
+
+    if (skip < 0 || (take !== null && take <= 0)) {
+      return res.status(400).json({ error: 'skip ≥ 0, take > 0' });
+    }
+    posts = posts.slice(skip);
+
+    if (take !== null) {
+      posts = posts.slice(0, take);
+    }
+
+    res.json(posts);
+  });
+});
+
+    
     const posts = JSON.parse(data);
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
