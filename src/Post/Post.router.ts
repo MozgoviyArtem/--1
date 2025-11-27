@@ -1,8 +1,10 @@
 import { Router } from 'express'
-import { patchPost } from '../Post/Post.controller'
+import { PostController } from "../Post/Post.controller"
+import { prisma } from "../database/prisma.service"
 
-const router = Router()
+export const PostRouter = Router()
 
-router.patch('/posts/:id', patchPost)
-
-export default router
+PostRouter.get("/posts", PostController.getAllPosts)
+PostRouter.get("/posts/:id", PostController.getProductById)
+PostRouter.post("/posts", PostController.createProduct)
+PostRouter.patch("/posts/:id", PostController.updateProduct)

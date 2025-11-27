@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id         Int    @id @default(autoincrement())
+  name       String
+  like       Int
+  views      Int
+  categories JOIN[]
+
+ createdBy   User?    @relation(fields: [createdById], references: [id])
+  createdById Int?
+//  likedBy     PostLike[]
+
+  postLikes PostLike[]
+}
+
+model Tag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts JOIN[]
+}
+
+model JOIN {
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int
+  tag    Tag  @relation(fields: [tagId], references: [id])
+  tagId  Int
+  // assignedAt DateTime @default(now())
+  // assignedBy String
+
+  @@id([postId, tagId])
+}
+model User {
+  id          Int      @id @default(autoincrement())
+  firstName   String
+  secondName  String
+  email       String   @unique
+  avatar      String
+  password    String
+  isAdmin     Boolean  @default(false)
+
+  createdPosts Post[]
+
+  // likedPosts  PostLike[]
+
+  postLikes PostLike[]
+}
+model PostLike {
+  userId Int
+  postId Int
+
+  User   User @relation(fields: [userId], references: [id])
+  post   Post @relation(fields: [postId], references: [id])
+
+  @@id([userId, postId])
+}

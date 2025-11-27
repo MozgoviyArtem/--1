@@ -3,14 +3,12 @@
     "id": 1,
     "title": "Перший пост",
     "description": "Це опис першого поста",
-    "image": "http://example.com/image1.jpg",
     "likes": 12
   },
   {
     "id": 2,
     "title": "Другий пост",
     "description": "Це опис другого поста",
-    "image": "http://example.com/image2.jpg",
     "likes": 8
   }
 ]
